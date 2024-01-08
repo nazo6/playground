@@ -1,0 +1,21 @@
+{
+  "projectId": "653d1c0d33a72ef3f8fb",
+  "projectName": "test",
+  "functions": [
+    {
+      "$id": "653d1c1bb26e9f9d52f2",
+      "name": "test",
+      "runtime": "deno-1.35",
+      "execute": ["any"],
+      "events": [],
+      "schedule": "",
+      "timeout": 15,
+      "enabled": true,
+      "logging": false,
+      "entrypoint": "src/main.ts",
+      "commands": "deno cache src/main.ts",
+      "ignore": [],
+      "path": "functions/test"
+    }
+  ]
+}
