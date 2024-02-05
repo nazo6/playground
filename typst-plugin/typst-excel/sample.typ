@@ -4,15 +4,15 @@
   plugin.get_table(
     read(file, encoding: none),
     bytes(sheet),
-    bytes(col),
-    bytes(row),
-    bytes(width),
-    bytes(height)
+    bytes(str(col)),
+    bytes(str(row)),
+    bytes(str(width)),
+    bytes(str(height))
   ),
   delimiter: "\t"
 )
 
 #table(
   columns: 4,
-  ..get_table("Book1.xlsx","Sheet1","1","1","4","10").flatten()
+  ..get_table("Book1.xlsx", "Sheet1", 1, 1, 4, 10).flatten()
 )
