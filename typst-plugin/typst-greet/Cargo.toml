@@ -1,5 +1,5 @@
 [package]
-name = "typst-minimal-plugin"
+name = "typst-greet"
 version = "0.1.0"
 edition = "2021"
 
