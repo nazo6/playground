@@ -4,3 +4,42 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+embassy-nrf = { version = "0.1.0", git = "https://github.com/embassy-rs/embassy", features = [
+  "defmt",
+  "gpiote",
+  "time-driver-rtc1",
+  "nrf52840",
+  "nfc-pins-as-gpio",
+] }
+bitvec = { version = "1.0.1", default-features = false }
+embassy-executor = { version = "0.5.0", git = "https://github.com/embassy-rs/embassy", features = [
+  "defmt",
+  "arch-cortex-m",
+  "executor-thread",
+  "executor-interrupt",
+  "integrated-timers",
+  "nightly",
+] }
+embassy-time = { version = "0.3.0", git = "https://github.com/embassy-rs/embassy", features = [
+  "defmt",
+  "defmt-timestamp-uptime",
+] }
+
+heapless = "0.8.0"
+
+smart-leds = "0.4.0"
+
+cortex-m = "0.7.7"
+cortex-m-rt = "0.7.3"
+
+defmt = "0.3.5"
+defmt-rtt = "0.4.0"
+panic-probe = { version = "0.3.1", features = ["print-defmt"] }
+nrf-softdevice = { version = "0.1.0", git = "https://github.com/embassy-rs/nrf-softdevice", features = [
+  "defmt",
+  "ble-peripheral",
+  "ble-central",
+  "critical-section-impl",
+  "s140",
+  "nrf52840",
+] }
