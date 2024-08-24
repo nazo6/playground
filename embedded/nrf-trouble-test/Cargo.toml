@@ -1,0 +1,72 @@
+[package]
+name = "nrf-trouble-test"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+embassy-executor = { version = "0.5", default-features = false, features = [
+  "nightly",
+  "arch-cortex-m",
+  "executor-thread",
+  "defmt",
+  "integrated-timers",
+  "executor-interrupt",
+] }
+embassy-time = { version = "0.3.0", default-features = false, features = [
+  "defmt",
+  "defmt-timestamp-uptime",
+] }
+embassy-nrf = { version = "0.1.0", default-features = false, features = [
+  "defmt",
+  "nrf52840",
+  "time-driver-rtc1",
+  "gpiote",
+  "unstable-pac",
+  "rt",
+] }
+embassy-futures = "0.1.1"
+embassy-sync = { version = "0.6", features = ["defmt"] }
+
+futures = { version = "0.3", default-features = false, features = [
+  "async-await",
+] }
+nrf-sdc = { version = "0.1.0", default-features = false, features = [
+  "defmt",
+  "nrf52840",
+  "peripheral",
+  "central",
+] }
+nrf-mpsl = { version = "0.1.0", default-features = false, features = [
+  "defmt",
+  "critical-section-impl",
+] }
+bt-hci = { version = "0.1.0", default-features = false, features = ["defmt"] }
+trouble-host = { git = "https://github.com/embassy-rs/trouble/", features = [
+  "defmt",
+  "gatt",
+] }
+
+cortex-m = "0.7.7"
+cortex-m-rt = "0.7.3"
+defmt = "0.3.5"
+defmt-rtt = "0.4.0"
+panic-probe = { version = "0.3.1", features = ["print-defmt"] }
+embedded-storage = "0.3.1"
+embedded-storage-async = "0.4.1"
+fixed = "1.24.0"
+heapless = "0.8.0"
+atomic-pool = "1.0.1"
+static_cell = "2.0.0"
+
+
+[patch.crates-io]
+embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", branch = "main" }
+embassy-nrf = { git = "https://github.com/embassy-rs/embassy.git", branch = "main" }
+embassy-sync = { git = "https://github.com/embassy-rs/embassy.git", branch = "main" }
+embassy-futures = { git = "https://github.com/embassy-rs/embassy.git", branch = "main" }
+embassy-time = { git = "https://github.com/embassy-rs/embassy.git", branch = "main" }
+embassy-time-driver = { git = "https://github.com/embassy-rs/embassy.git", branch = "main" }
+embassy-embedded-hal = { git = "https://github.com/embassy-rs/embassy.git", branch = "main" }
+nrf-sdc = { git = "https://github.com/alexmoon/nrf-sdc.git", branch = "main" }
+nrf-mpsl = { git = "https://github.com/alexmoon/nrf-sdc.git", branch = "main" }
+bt-hci = { git = "https://github.com/alexmoon/bt-hci.git", branch = "main" }
