@@ -1,0 +1,19 @@
+[package]
+name = "blitz-test"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dioxus = { version = "0.6" }
+dioxus-native = { git = "https://github.com/DioxusLabs/blitz", rev = "ca99a6604c1dee5f7152aebefed2ae2ca144e1aa" }
+blitz-html = { git = "https://github.com/DioxusLabs/blitz", rev = "ca99a6604c1dee5f7152aebefed2ae2ca144e1aa" }
+blitz-dom = { git = "https://github.com/DioxusLabs/blitz", rev = "ca99a6604c1dee5f7152aebefed2ae2ca144e1aa" }
+blitz-shell = { git = "https://github.com/DioxusLabs/blitz", rev = "ca99a6604c1dee5f7152aebefed2ae2ca144e1aa", default-features = false }
+blitz-net = { git = "https://github.com/DioxusLabs/blitz", rev = "ca99a6604c1dee5f7152aebefed2ae2ca144e1aa" }
+blitz-traits = { git = "https://github.com/DioxusLabs/blitz", rev = "ca99a6604c1dee5f7152aebefed2ae2ca144e1aa" }
+
+# IO & Networking
+url = { version = "2.5.4", features = ["serde"] }
+tokio = { version = "1.43.0", features = ["full"] }
+reqwest = "0.12.12"
+png = "0.17.16"
