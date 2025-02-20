@@ -1,0 +1,9 @@
+[package]
+name = "gpui-component-test"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+gpui = { git = "https://github.com/huacnlee/zed.git", branch = "webview", version = "0.1.0" }
+ui = { git = "https://github.com/longbridge/gpui-component", version = "0.1.0" }
+tokio = { version = "1.43.0", features = ["full"] }
