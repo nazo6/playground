@@ -1,0 +1,29 @@
+using sysbus
+
+mach create
+machine LoadPlatformDescription @platforms/boards/nrf52840dk_nrf52840.repl
+
+$elf?=@target/thumbv7em-none-eabihf/release/embassy-renode-test
+$softdevice?=@sd.hex
+
+# logLevel -1
+# showAnalyzer uart0
+# showAnalyzer uart1
+sysbus LogAllPeripheralsAccess true
+cpu LogFunctionNames true
+# verboseMode true
+
+macro reset
+"""
+    # sysbus.flash ResetByte 0xFF
+    # sysbus.flash ZeroAll
+
+    sysbus LoadHEX $softdevice
+    sysbus LoadELF $elf
+
+    # sysbus.cpu VectorTableOffset 0x0
+"""
+runMacro $reset
+
+machine StartGdbServer 3333
+# start

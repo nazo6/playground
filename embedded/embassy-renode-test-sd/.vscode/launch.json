@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "GDB Remote Debugging",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/target/thumbv7em-none-eabihf/release/embassy-renode-test",
+      "miDebuggerServerAddress": "localhost:3333",
+      "miDebuggerPath": "rust-gdb",
+      "preLaunchTask": "Run Renode",
+      "postDebugTask": "Close Renode",
+      "cwd": "${workspaceFolder}",
+      "setupCommands": [
+        {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": false
+        }
+    ],
+    }
+  ]
+}
