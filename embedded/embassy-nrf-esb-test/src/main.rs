@@ -2,12 +2,15 @@
 #![no_main]
 #![feature(impl_trait_in_assoc_type)]
 
+use defmt::debug;
 use embassy_executor::Spawner;
+use embassy_futures::join::join;
 use embassy_nrf::config::HfclkSource;
 use embassy_nrf::gpio::Output;
+use embassy_nrf::interrupt::{self, InterruptExt};
 use embassy_nrf::{bind_interrupts, config::Config, peripherals::RADIO};
-use embassy_nrf_esb::ptx::PtxRadio;
-use embassy_nrf_esb::{prx::PrxRadio, RadioConfig};
+use embassy_nrf_esb::ptx::{new_ptx, PtxConfig};
+use embassy_nrf_esb::RadioConfig;
 use {defmt_rtt as _, panic_probe as _};
 
 bind_interrupts!(pub struct Irqs {
@@ -20,6 +23,8 @@ async fn main(_spawner: Spawner) {
     config.hfclk_source = HfclkSource::ExternalXtal;
     let p = embassy_nrf::init(config);
 
+    interrupt::RADIO.set_priority(interrupt::Priority::P1);
+
     let mut led = Output::new(
         p.P1_03,
         embassy_nrf::gpio::Level::Low,
@@ -27,14 +32,17 @@ async fn main(_spawner: Spawner) {
     );
 
     defmt::info!("start");
-    let mut prx = PrxRadio::<'_, _, 64>::new(p.RADIO, Irqs, RadioConfig::default()).unwrap();
-    loop {
-        let mut buf = [0; 32];
-        if let Ok(s) = prx.recv(&mut buf, 0xFF).await {
-            defmt::info!("recv {:?}", buf[..s]);
+    let (mut task, ptx) =
+        new_ptx::<_, 255>(p.RADIO, Irqs, RadioConfig::default(), PtxConfig::default());
+    join(task.run(), async move {
+        loop {
+            if let Err(e) = ptx.send(0, &[0, 1, 2, 3], true).await {
+                debug!("{:?}", e);
+            }
+            embassy_time::Timer::after_millis(1000).await;
         }
-        // led.toggle();
-    }
+    })
+    .await;
 
     // let mut ptx = embassy_nrf_esb::ptx::PtxRadio::<'_, _, 64>::new(
     //     p.RADIO,
