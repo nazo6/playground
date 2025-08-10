@@ -1,19 +1,21 @@
+cargo-features = ["profile-rustflags"]
+
 [package]
 edition = "2021"
-name = "embassy-renode-test"
+name = "esb-test"
 version = "0.1.0"
 authors = ["nazo6 <git@nazo6.dev>"]
 resolver = "2"
 
 [[bin]]
-name = "embassy-renode-test"
+name = "esb-test"
 test = false
 bench = false
 
 [dependencies]
-defmt = "0.3"
-defmt-rtt = "0.4"
-panic-probe = { version = "0.3", features = ["print-defmt"] }
+defmt = "1.0.1"
+defmt-rtt = "1.0.0"
+panic-probe = { version = "1.0.0", features = ["print-defmt"] }
 
 embedded-hal = "1.0.0"
 embedded-hal-async = "1.0.0"
@@ -23,21 +25,19 @@ embedded-storage = "0.3.1"
 
 cortex-m-rt = "0.7.3"
 
-embassy-executor = { version = "0.7", features = [
-  "task-arena-size-1024",
+embassy-executor = { version = "0.8", features = [
   "arch-cortex-m",
   "executor-thread",
   "defmt",
   "executor-interrupt",
-  "nightly",
 ] }
-embassy-sync = { version = "0.6" }
+embassy-sync = { version = "0.7.0" }
 embassy-time = { version = "0.4", features = [
   "defmt",
   "defmt-timestamp-uptime",
 ] }
 cortex-m = { version = "0.7.6", features = ["critical-section-single-core"] }
-embassy-nrf = { version = "0.3", features = [
+embassy-nrf = { version = "0.6.0", features = [
   "defmt",
   "nrf52840",
   "time-driver-rtc1",
@@ -51,6 +51,7 @@ embassy-nrf-esb = { version = "0.1.0", path = "../../../../lib/embassy-nrf-esb",
 ] }
 nrf-pac = { version = "0.1.0", features = ["defmt"] }
 embassy-futures = "0.1.1"
+defmt-embassy-usb-logger = { version = "0.1.0", path = "../../../../lib/defmt-embassy-usb-logger" }
 
 [profile.release]
 debug = 2
