@@ -7,21 +7,23 @@ version = "0.1.0"
 authors = ["nazo6 <git@nazo6.dev>"]
 resolver = "2"
 
+[lib]
+test = false
+bench = false
+
 [[bin]]
-name = "esb-test"
+name = "ptx"
+test = false
+bench = false
+
+[[bin]]
+name = "prx"
 test = false
 bench = false
 
 [dependencies]
 defmt = "1.0.1"
-defmt-rtt = "1.0.0"
 panic-probe = { version = "1.0.0", features = ["print-defmt"] }
-
-embedded-hal = "1.0.0"
-embedded-hal-async = "1.0.0"
-embedded-io = "0.6.1"
-embedded-io-async = "0.6.1"
-embedded-storage = "0.3.1"
 
 cortex-m-rt = "0.7.3"
 
@@ -53,12 +55,5 @@ nrf-pac = { version = "0.1.0", features = ["defmt"] }
 embassy-futures = "0.1.1"
 defmt-embassy-usb-logger = { version = "0.1.0", path = "../../../../lib/defmt-embassy-usb-logger" }
 
-[profile.release]
-debug = 2
-lto = true
-opt-level = 'z'
-
-[profile.dev]
-debug = 2
-lto = true
-opt-level = "z"
+[features]
+_check = []

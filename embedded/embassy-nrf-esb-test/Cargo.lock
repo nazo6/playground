@@ -249,16 +249,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "defmt-rtt"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b2cac3b8a5644a9e02b75085ebad3b6deafdbdbdec04bb25086523828aa4dfd1"
-dependencies = [
- "critical-section",
- "defmt 1.0.1",
-]
-
-[[package]]
 name = "document-features"
 version = "0.2.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -540,18 +530,12 @@ dependencies = [
  "cortex-m-rt",
  "defmt 1.0.1",
  "defmt-embassy-usb-logger",
- "defmt-rtt",
  "embassy-executor",
  "embassy-futures",
  "embassy-nrf",
  "embassy-nrf-esb",
  "embassy-sync",
  "embassy-time",
- "embedded-hal 1.0.0",
- "embedded-hal-async",
- "embedded-io",
- "embedded-io-async",
- "embedded-storage",
  "nrf-pac",
  "panic-probe",
 ]

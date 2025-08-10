@@ -2,12 +2,14 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build application",
+      "label": "run ptx",
       "type": "shell",
-      "command": "cargo",
-      "args": [
-        "build"
-      ]
+      "command": "./run.sh ptx"
+    },
+    {
+      "label": "run prx",
+      "type": "shell",
+      "command": "./run.sh prx"
     }
   ]
 }
