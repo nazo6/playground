@@ -16,7 +16,9 @@ else
     exit 1
 fi
 
-cargo run --release --bin "$BIN"
+if [ "$2" != "--attach" ]; then
+  cargo run --release --bin "$BIN"
+fi
 
 COM_PORT=$(pwsh.exe -NoProfile -Command \
 "Get-CimInstance Win32_PnPEntity |
@@ -29,7 +31,7 @@ COM_PORT=$(echo "$COM_PORT" | tr -d '\r')
 
 echo "COM port: $COM_PORT"
 
-sleep 0.5s
+sleep 1s
 
 BIN_PATH=$(wslpath -w -a ./target/thumbv7em-none-eabihf/release/$BIN)
 echo "Using binary: $BIN_PATH"

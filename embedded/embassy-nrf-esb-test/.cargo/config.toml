@@ -15,7 +15,7 @@ build-std = ["core", "alloc"]
 build-std-features = ["optimize_for_size"]
 
 [env]
-DEFMT_LOG = "debug"
+DEFMT_LOG = "info"
 
 [build]
 target = "thumbv7em-none-eabihf"

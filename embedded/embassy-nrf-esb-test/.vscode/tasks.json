@@ -10,6 +10,16 @@
       "label": "run prx",
       "type": "shell",
       "command": "./run.sh prx"
+    },
+    {
+      "label": "attach ptx",
+      "type": "shell",
+      "command": "./run.sh ptx --attach"
+    },
+    {
+      "label": "attach prx",
+      "type": "shell",
+      "command": "./run.sh prx --attach"
     }
   ]
 }

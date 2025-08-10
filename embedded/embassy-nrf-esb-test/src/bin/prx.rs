@@ -1,12 +1,12 @@
 #![no_std]
 #![no_main]
 
-use defmt::{debug, error, info};
+use defmt::{error, info};
 use defmt_embassy_usb_logger as _;
 use embassy_executor::Spawner;
 use embassy_futures::join::join;
 use embassy_nrf_esb::RadioConfig;
-use esb_test::{init, Irqs};
+use esb_test::{init, Irqs, Message};
 use panic_probe as _;
 
 #[embassy_executor::main]
@@ -17,35 +17,33 @@ async fn main(spawner: Spawner) {
     let (mut task, mut prx) =
         embassy_nrf_esb::prx::new_prx::<_, 255>(p.RADIO, Irqs, RadioConfig::default());
     join(task.run(), async move {
-        let mut latest_recv: Option<u8> = None;
+        let mut test_data: Option<(u8, u8, u8)> = None;
         loop {
             let mut buffer = [0u8; 255];
             match prx.recv(&mut buffer).await {
                 Ok(n) => {
-                    info!(
-                        "Received packet with unexpected length: {}, contents: {:?}",
-                        n,
-                        &buffer[..n]
-                    );
-                    if buffer[0..3] != [0, 1, 2] {
-                        error!(
-                            "Received packet with unexpected header: {:?}",
-                            &buffer[0..3]
-                        );
-                    } else {
-                        let value = buffer[2];
-                        if let Some(latest_recv) = latest_recv {
-                            if value != latest_recv + 1 {
-                                error!(
-                                    "Received out-of-order packet: expected {}, got {}",
-                                    latest_recv + 1,
-                                    value
-                                );
-                            }
-                        } else {
-                            debug!("First packet received");
+                    let Some(message) = Message::decode(&buffer[..n]) else {
+                        error!("Received invalid message");
+                        continue;
+                    };
+                    match message {
+                        Message::TestStart(max) => {
+                            test_data = Some((max, 0, 0));
                         }
-                        latest_recv = Some(value);
+                        Message::TestCount(c) => {
+                            if let Some((_, count, loss)) = &mut test_data {
+                                if c != *count + 1 {
+                                    error!("Missed data: {} to {}", count, c);
+                                    *loss += 1;
+                                }
+                                *count = c;
+                            } else {
+                                error!("Received count without a test start");
+                            }
+                        }
+                        Message::TestEnd => {
+                            info!("Test result: {:?}", test_data);
+                        }
                     }
                 }
                 Err(e) => {
